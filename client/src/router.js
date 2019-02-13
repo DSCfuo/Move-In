@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import SearchResult from './views/SearchResults.vue'
 import AdminLogIn from './views/AdminLogIn.vue'
+import AdminDashboard from './views/AdminDashboard'
+import BookedApartment from '@/components/BookedApartments.vue'
 
 Vue.use(Router)
 
@@ -22,8 +24,19 @@ export default new Router({
     },
     {
       path: '/admin/login',
-      name: 'admin_login',
+      name: 'adminLogin',
       component: AdminLogIn
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'adminDashboard',
+      component: AdminDashboard,
+      children: [
+        {
+          path: 'booked',
+          component: BookedApartment
+        }
+      ]
     }
   ]
 })
