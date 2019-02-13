@@ -22,7 +22,7 @@
 
           <v-flex xs12 md4>
             <p>Subscribe to our news letter</p>
-            <v-form>
+            <v-form ref="newsletter_subscription">
                 <v-layout row justify-space-between>
                     <v-flex xs6>
                         <v-text-field
@@ -35,7 +35,7 @@
                             ></v-text-field>
                     </v-flex>
                     <v-flex xs6>
-                        <v-btn class="primary py-2" text-xs-right>Subscribe</v-btn>
+                        <v-btn class="primary py-2" text-xs-right @click="subscribe">Subscribe</v-btn>
                     </v-flex>
                 </v-layout>
             </v-form>
@@ -44,6 +44,27 @@
       </v-container>
   </v-footer>
 </template>
+
+<script>
+export default {
+    data(){
+        return {
+            email: '',
+            emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+/.test(v) || 'E-mail must be valid'
+            ]
+        }
+    },
+    methods: {
+        subscribe(){
+            if(this.$refs.newsletter_subscription.validate()){
+                console.log("Subscribing to new letter")
+            }
+        }
+    }
+}
+</script>
 
 .<style scoped>
 .footer ul{

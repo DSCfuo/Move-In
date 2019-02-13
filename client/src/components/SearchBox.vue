@@ -61,11 +61,9 @@
 
 <script>
   export default {
+    props: ['location', 'budget', 'apartment'],
     data: () => ({
       valid: false,
-      location: '',
-      budget: undefined,
-      apartment:'',
       apartmentType: ['Office', 'Shop', 'Self Contain',
                       '1 Bedroom apartment', '2 Bedroom apartment',
                       '3 Bedroom apartment', 'Duplex'],
@@ -80,6 +78,14 @@
         submit(){
             if(this.$refs.form.validate()){
                 console.log(this.location, this.budget, this.apartment)
+                this.$router.push({
+                    name: 'search',
+                    query: {
+                        location: this.location,
+                        budget: this.budget,
+                        apartment: this.apartment? this.apartment : 'any'
+                    }
+                })
             }
         }
     }

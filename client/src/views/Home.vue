@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home white">
     <div class="showcase pt-5">
       <h2 class="display-2 mx-auto white--text">Find the perfect apartment</h2>
       <h5 class="title mx-auto white--text">Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempo incididunt ut labore et dolore magna aliqua.</h5>
