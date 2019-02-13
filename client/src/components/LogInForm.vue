@@ -1,5 +1,5 @@
 <template>
-  <v-form class="login-form" ref="loginForm">
+  <v-form class="login-form my-4" ref="loginForm">
     <v-container>
       <v-card class="pa-5">
       <v-layout row wrap>
