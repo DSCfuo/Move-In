@@ -4,4 +4,6 @@ const adminController = require('../controllers/admin');
 
 router.get('/', adminController.getAllAdmins)
 
+router.post('/register', adminController.registerAdmin)
+
 module.exports = router

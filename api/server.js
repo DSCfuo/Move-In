@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
     })
 })
 
-app.use('/api/admin/', adminRoute);
+app.use('/api/admin', adminRoute);
 
 
 app.use((req, res, next) => {
