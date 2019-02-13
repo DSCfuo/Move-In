@@ -5,13 +5,20 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:create": "cd models && node createTables",
+    "db:drop": "cd models && node dropTables"
   },
   "author": "George Benjamin",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "pg": "^7.8.0"
+  },
+  "devDependencies": {
+    "make-runnable": "^1.3.6"
   }
 }

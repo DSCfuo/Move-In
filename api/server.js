@@ -5,6 +5,9 @@ const morgan = require('morgan');
 const port = 3000;
 const NODE_ENV = process.env.NODE_ENV;
 
+//Routes
+const adminRoute = require('./routes/admin');
+
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -15,6 +18,9 @@ app.get('/', (req, res) => {
         message: "Welcome to the MoveIn API"
     })
 })
+
+app.use('/api/admin/', adminRoute);
+
 
 app.use((req, res, next) => {
     res.status(404).json({
