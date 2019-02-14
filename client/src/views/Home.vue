@@ -3,7 +3,16 @@
     <div class="showcase pt-5">
       <h2 class="display-2 mx-auto white--text">Find the perfect apartment</h2>
       <h5 class="title mx-auto white--text">Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempo incididunt ut labore et dolore magna aliqua.</h5>
-
+      <v-btn
+              fixed
+              dark
+              fab
+              bottom
+              right
+              color="#FD7C88"
+            >
+              <v-icon>rate_review</v-icon>
+            </v-btn>
       <SearchBox />
     </div>
     <v-container>
@@ -57,8 +66,36 @@
           </v-layout>
         </div>
 
+        <div class="steps pa-3 my-3">
+          <h2 class="title my-3 text-xs-center">How it works</h2>
+          <v-layout row wrap justify-space-between>
+            <v-flex xs12 md6>
+              <img src="../../public/images/step1.png" alt="">
+            </v-flex>
+            <v-flex xs12 md6>
+              <h2 class="title mt-5 mb2 subheading">Search for an apartment</h2>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam soluta placeat autem, accusamus
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam soluta placeat autem, accusamus
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam soluta placeat autem, accusamus
+              </p>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap justify-space-between>
+            <v-flex xs12 md6>
+              <h2 class="title mt-5 mb-2 subheading">Get in touch with the owner</h2>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam soluta placeat autem, accusamus
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam soluta placeat autem, accusamus
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam soluta placeat autem, accusamus
+              </p>
+            </v-flex>
+            <v-flex xs12 md6>
+              <img src="../../public/images/step2.png" alt="">
+            </v-flex>
+          </v-layout>
+        </div>
+
         <div class="create-listing">
-          <v-layout row wrap justify-space-between="">
+          <v-layout row wrap justify-space-between>
             <v-flex xs12 md4>
               <img src="../../public/images/apartment.jpg" alt="">
             </v-flex>
@@ -127,6 +164,17 @@ import SearchBox from '@/components/SearchBox.vue'
 
 .about{
   background-color: rgba(97, 135, 230, 0.082);
+}
+
+.steps{
+  background-color: #F6F8FD;
+}
+
+.steps img{
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .create-listing img{
