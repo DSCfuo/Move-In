@@ -15,7 +15,7 @@ exports.getAllSubscribers = async (req, res, next) => {
             data: queryResult.rows,
         })
     }catch(err){
-        console.log('Failed to fetch from db', err)
+        console.log('Failed to fetch subscribers from db', err)
         return next(err)
     }
 }
