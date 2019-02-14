@@ -3,8 +3,10 @@
         <v-toolbar class="white">
             <v-toolbar-title>
                 <v-icon class="primary--text" left>home</v-icon>
-                <span class="font-weight-light">Move</span>
-                <span>In</span>
+                <router-link to="/">
+                    <span class="font-weight-light">Move</span>
+                    <span>In</span>
+                </router-link>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
