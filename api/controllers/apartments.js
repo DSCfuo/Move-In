@@ -1,7 +1,7 @@
 const db = require('../db/index');
 const jwt = require('jsonwebtoken');
 
-function verifyToken(token){
+const verifyToken = async (token) => {
     return new Promise((resolve, reject) => {
         jwt.verify(token, process.env.TOKEN_KEY, (err, match) => {
             if(err){
@@ -10,6 +10,14 @@ function verifyToken(token){
             resolve(match)
         })
     })
+}
+
+const getApartmentById = async (id) => {
+    const queryResult = await db.query('SELECT * FROM houses WHERE id = $1', [id]);
+    if(queryResult.rows.length > 0){
+        return queryResult.rows[0];
+    }
+    return null;
 }
 
 const createOwner = async (name, email, phoneNumber) => {
@@ -83,7 +91,12 @@ exports.updateApartment = async (req, res, next) => {
                 message: 'Invalid token'
             })
         }
-
+        let apartmentToUpdate = await getApartmentById(apartmentId);
+        if(!apartmentToUpdate){
+            return res.status(400).json({
+                message: 'Apartment does not exist'
+            })
+        }
         const updateApartmentQuery = `UPDATE houses SET address= $1, apartmenttype = $2, location = $3, price = $4, 
                                       status = $5, description = $6 WHERE id = $7 `;
         const updateApartmentQueryValues = [address, apartmentType, location, price, status, description, apartmentId];
@@ -93,6 +106,40 @@ exports.updateApartment = async (req, res, next) => {
         })
     }catch(err){
         console.log('Something went wrong while updating apartment', err);
+        return next(err);
+    }
+}
+
+exports.deleteApartment = async (req, res, next) => {
+    const apartmentId = req.params.id;
+    let token = req.headers.authorization;
+    if(!token){
+        res.status(400).json({
+            message: 'Invalid token'
+        })
+    }
+    try {
+        let verifiedUser = await verifyToken(token);
+        if(!verifiedUser){
+            return res.status(400).json({
+                message: 'Invalid token'
+            })
+        }
+
+        let apartmentToDelete = await getApartmentById(apartmentId);
+        if(!apartmentToDelete){
+            return res.status(400).json({
+                message: 'Apartment does not exist'
+            })
+        }
+        const deleteApartmentQuery = 'DELETE FROM houses WHERE id = $1';
+        const queryResult = await db.query(deleteApartmentQuery, [apartmentId]);
+        return res.status(200).json({
+            message: 'Apartment deleted successfully'
+        })
+
+    } catch (err) {
+        console.log('Something went wrong while deleting apartment', err);
         return next(err);
     }
 }
