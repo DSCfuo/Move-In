@@ -2,18 +2,10 @@
   <div class="home white">
     <div class="showcase pt-5">
       <h2 class="display-2 mx-auto white--text">Find the perfect apartment</h2>
-      <h5 class="title mx-auto white--text">Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempo incididunt ut labore et dolore magna aliqua.</h5>
-      <v-btn
-              fixed
-              dark
-              fab
-              bottom
-              right
-              color="#FD7C88"
-            >
-              <v-icon>rate_review</v-icon>
-            </v-btn>
+      <h5 class="title mx-auto white--text">Lorem ipsum dolor sit amet, consectetur adipiscing do
+         eiusmod tempo incididunt ut labore et dolore magna aliqua.</h5>
       <SearchBox />
+      <ReviewPopup />
     </div>
     <v-container>
         <div class="cities">
@@ -30,10 +22,10 @@
           <h2 class="title my-3 text-xs-center">There are a log of rental services. Why would you choose us?</h2>
           <p class="text-xs-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos veniam esse pariatur libero
             mollitia in labore veritatis praesentium quas quis, iste sapiente repellendus quasi iusto dolore
-            similique eligendi voluptates?>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos veniam esse pariatur libero
-            mollitia in labore veritatis praesentium quas quis, iste sapiente repellendus quasi iusto dolore
-            similique eligendi voluptates?>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos veniam esse pariatur libero
-            mollitia in labore veritatis praesentium quas quis, iste sapiente repellendus quasi iusto dolore
+            similique eligendi voluptates?>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos veniam esse 
+            pariatur libero mollitia in labore veritatis praesentium quas quis, iste sapiente repellendus quasi iusto dolore
+            similique eligendi voluptates?>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos veniam esse 
+            pariatur liber mollitia in labore veritatis praesentium quas quis, iste sapiente repellendus quasi iusto dolore
             similique eligendi voluptates?</p>
         </div>
 
@@ -114,7 +106,8 @@
 </template>
 
 <script>
-import SearchBox from '@/components/SearchBox.vue'
+import SearchBox from '@/components/SearchBox.vue';
+import ReviewPopup from '@/components/ReviewPopup';
   export default {
     data(){
       return{
@@ -129,6 +122,7 @@ import SearchBox from '@/components/SearchBox.vue'
     },
     components: {
       SearchBox,
+      ReviewPopup
     }
   }
 </script>
