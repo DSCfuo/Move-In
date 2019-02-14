@@ -32,12 +32,34 @@ const createOwner = async (name, email, phoneNumber) => {
     }
 }
 
-exports.getApartments = async (req, res) => {
+exports.getAllApartments = async (req, res) => {
     const dbResult = await db.query('SELECT * FROM houses');
     const apartments = dbResult.rows;
     return res.status(200).json({
         data: apartments
     })
+}
+
+exports.searchForApartment = async (req, res) => {
+    let {location, price, apartmentType} = req.query;
+    console.log(location, price, apartmentType);
+    try {
+        let searchQuery, searchQueryValues
+        if(apartmentType == 'any'){
+            searchQuery = 'SELECT * FROM houses WHERE location=$1 AND price <= $2';
+            searchQueryValues = [location, price];
+        }else{ 
+            searchQuery = 'SELECT * FROM houses WHERE location=$1 AND price <= $2 AND apartmenttype = $3';
+            searchQueryValues = [location, price, apartmentType];
+        }
+        const queryResult = await db.query(searchQuery, searchQueryValues);
+        return res.status(200).json({
+            data: queryResult.rows
+        })
+    } catch (err) {
+        console.log("Something bad happened trying search for an apartment", err);
+        return next(err)
+    }
 }
 
 exports.createApartment = async (req, res, next) => {
