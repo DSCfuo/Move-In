@@ -8,26 +8,21 @@
           <v-container fill-height fluid>
             <v-layout fill-height>
               <v-flex xs12 align-end flexbox>
-                <span class="headline primary white--text pa-2">Available</span>
+                <span class="headline primary white--text pa-2">{{status}}</span>
               </v-flex>
             </v-layout>
           </v-container>
         </v-img>
-        <v-card-title>
+        <v-card-text>
           <div>
-            <p class="title">250,000</p>
-            <v-layout row justify-space-between="">
-                <v-flex xs6>
-                    <span class="grey--text">Lekki Phase 1</span>
-                </v-flex>
-                <v-flex xs6>
-                    <span class="grey--text">1 Bedroom flat</span>
-                </v-flex>
-            </v-layout>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati laboriosam, animi reiciendis deleniti, voluptatem
-               culpa consequuntur quis sint.</p>
+            <div class="primary-info">
+                <p class="title">N{{house.price}}</p>
+                <p>{{house.address}}</p>
+            </div>
+            <p>{{house.apartmenttype}}</p>
+            <p>{{house.description}}</p>
           </div>
-        </v-card-title>
+        </v-card-text>
         <v-card-actions>
             <v-btn flat color="primary">
                 <v-icon class="primary--text" left>email</v-icon>
@@ -40,3 +35,28 @@
         </v-card-actions>
         </v-card>
 </template>
+
+<script>
+export default {
+    props: ['house'],
+    computed: {
+        status(){
+            console.log("House status", this.house.status)
+            if(this.house.status === 1){
+                return 'Available'
+            }else if(this.house.status === 2){
+                return 'Booked'
+            }else{
+                return 'Unavailable'
+            }
+        }
+    }
+}
+</script>
+
+<style scoped>
+.primary-info{
+    display: flex;
+    justify-content: space-between
+}
+</style>
