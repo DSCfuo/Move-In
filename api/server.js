@@ -7,6 +7,7 @@ const NODE_ENV = process.env.NODE_ENV;
 
 //Routes
 const adminRoute = require('./routes/admin');
+const apartmentsRoute = require('./routes/apartments')
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/admin', adminRoute);
+app.use('/api/apartments', apartmentsRoute)
 
 
 app.use((req, res, next) => {
