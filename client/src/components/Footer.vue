@@ -22,9 +22,10 @@
 
           <v-flex xs12 md4>
             <p>Subscribe to our news letter</p>
+            <p v-if="newsletter_message" class="primary--text">{{newsletter_message}}</p>
             <v-form ref="newsletter_subscription">
                 <v-layout row justify-space-between>
-                    <v-flex xs6>
+                    <v-flex xs8>
                         <v-text-field
                             v-model="email"
                             :rules="emailRules"
@@ -34,7 +35,7 @@
                             light
                             ></v-text-field>
                     </v-flex>
-                    <v-flex xs6>
+                    <v-flex xs4>
                         <v-btn class="primary py-2" text-xs-right @click="subscribe">Subscribe</v-btn>
                     </v-flex>
                 </v-layout>
@@ -46,6 +47,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+const apiUrl = 'http://localhost:3000/api/newsletter';
 export default {
     data(){
         return {
@@ -53,13 +56,24 @@ export default {
             emailRules: [
                 v => !!v || 'E-mail is required',
                 v => /.+@.+/.test(v) || 'E-mail must be valid'
-            ]
+            ],
+            newsletter_message: '',
         }
     },
     methods: {
         subscribe(){
             if(this.$refs.newsletter_subscription.validate()){
-                console.log("Subscribing to new letter")
+                console.log("Subscribing to new letter");
+                axios.post(apiUrl, {
+                    email: this.email,
+                })
+                .then(res => {
+                    console.log('Yaaay!', res.data.message)
+                    this.newsletter_message = res.data.message
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             }
         }
     }
