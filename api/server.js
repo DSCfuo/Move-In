@@ -8,6 +8,7 @@ const NODE_ENV = process.env.NODE_ENV;
 //Routes
 const adminRoute = require('./routes/admin');
 const apartmentsRoute = require('./routes/apartments')
+const newsletterRoute = require('./routes/newsletter');
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/admin', adminRoute);
 app.use('/api/apartments', apartmentsRoute)
-
+app.use('/api/newsletter', newsletterRoute)
 
 app.use((req, res, next) => {
     res.status(404).json({
