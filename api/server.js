@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const port = 3000;
 const NODE_ENV = process.env.NODE_ENV;
@@ -12,6 +13,14 @@ const newsletterRoute = require('./routes/newsletter');
 const reviewsRoute = require('./routes/reviews');
 
 const app = express();
+
+if(NODE_ENV === 'production'){
+    app.use(morgan('combined'));
+}else{
+    app.use(morgan('dev'))
+}
+
+app.use(cors())
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

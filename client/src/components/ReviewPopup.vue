@@ -17,6 +17,7 @@
             </v-card-title>
             <v-card-text>
                 <v-form ref="reviewForm">
+                    <p v-show="result" class="primary--text">{{result}}</p>
                     <v-rating
                         v-model="rating"
                         background-color="orange lighten-3"
@@ -40,17 +41,32 @@
 </template>
 
 <script>
+import axios from 'axios';
+const apiUrl = 'http://localhost:3000/api/reviews';
+
 export default {
     data(){
         return{
             rating: 0,
-            review: ''
+            review: '',
+            result: '',
         }
     },
     methods: {
         submitReview(){
             if(this.$refs.reviewForm.validate()){
-                console.log(this.rating, this.review)
+                console.log(this.rating, this.review);
+                axios.post(apiUrl, {
+                    rating: this.rating,
+                    review: this.review
+                })
+                .then(res => {
+                    console.log('Yaaay!', res.data.message)
+                    this.result = res.data.message
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             }
         }
     }

@@ -4,7 +4,7 @@
       <h2 class="display-2 mx-auto white--text">Find the perfect apartment</h2>
       <h5 class="title mx-auto white--text">Lorem ipsum dolor sit amet, consectetur adipiscing do
          eiusmod tempo incididunt ut labore et dolore magna aliqua.</h5>
-      <SearchBox />
+      <SearchBox location=""  />
       <ReviewPopup />
     </div>
     <v-container>
@@ -108,6 +108,7 @@
 <script>
 import SearchBox from '@/components/SearchBox.vue';
 import ReviewPopup from '@/components/ReviewPopup';
+import axios from 'axios';
   export default {
     data(){
       return{
