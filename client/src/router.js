@@ -5,6 +5,7 @@ import SearchResult from './views/SearchResults.vue'
 import AdminLogIn from './views/AdminLogIn.vue'
 import AdminDashboard from './views/AdminDashboard'
 import BookedApartment from '@/components/BookedApartments.vue'
+import ContactUs from './views/ContactUs'
 
 Vue.use(Router)
 
@@ -21,6 +22,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: SearchResult
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: ContactUs,
     },
     {
       path: '/admin/login',
