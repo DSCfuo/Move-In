@@ -65,3 +65,34 @@ exports.createApartment = async (req, res, next) => {
     }
     
 }
+
+exports.updateApartment = async (req, res, next) => {
+    let {address, apartmentType, location, price, status, description} = req.body;
+    const apartmentId = req.params.id;
+    let token = req.headers.authorization;
+    if(!token){
+        res.status(400).json({
+            message: 'Invalid token'
+        })
+    }
+    
+    try{
+        let verifiedUser = await verifyToken(token);
+        if(!verifiedUser){
+            return res.status(400).json({
+                message: 'Invalid token'
+            })
+        }
+
+        const updateApartmentQuery = `UPDATE houses SET address= $1, apartmenttype = $2, location = $3, price = $4, 
+                                      status = $5, description = $6 WHERE id = $7 `;
+        const updateApartmentQueryValues = [address, apartmentType, location, price, status, description, apartmentId];
+        const queryResult = await db.query(updateApartmentQuery, updateApartmentQueryValues);
+        return res.status(200).json({
+            message: 'Apartment updated successfully'
+        })
+    }catch(err){
+        console.log('Something went wrong while updating apartment', err);
+        return next(err);
+    }
+}

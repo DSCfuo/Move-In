@@ -4,6 +4,6 @@ const apartmentController = require('../controllers/apartments')
 
 router.get('/', apartmentController.getApartments)
 router.post('/', apartmentController.createApartment);
-
+router.put('/:id', apartmentController.updateApartment)
 
 module.exports =  router;
