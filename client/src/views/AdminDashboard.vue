@@ -9,7 +9,7 @@
             </v-list-tile-avatar>
 
             <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
+              <v-list-tile-title>{{user.name}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -31,6 +31,14 @@
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+      <v-list-tile @click="logout">
+        <v-list-tile-action>
+          <v-icon>exit_to_app</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Logout</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
     </v-list>
   </v-navigation-drawer>
 
@@ -49,6 +57,19 @@
           { title: 'About', icon: 'question_answer' }
         ],
         right: null
+      }
+    },
+    methods: {
+      logout(){
+        console.log("About to logout")
+        localStorage.removeItem('token');
+        localStorage.removeItem('admin');
+        this.$router.push('/')
+      }
+    },
+    computed: {
+      user(){
+        return JSON.parse(localStorage.getItem('admin'))
       }
     }
   }

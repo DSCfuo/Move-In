@@ -64,10 +64,15 @@ const apiUrl = 'http://localhost:3000/api/admin/login';
           })
           .then(res => {
             localStorage.setItem('token', res.data.token);
-            localStorage.setItem('user', JSON.stringify(res.data.admin));
+            localStorage.setItem('admin', JSON.stringify(res.data.admin));
             this.$router.push('/admin/dashboard')
           })
           .catch(err => {
+            console.log("An error occured", err)
+            if(err.message === 'Network Error'){
+              this.loginError = "Failed to connect to server";
+              return 
+            }
             this.loginError = err.response.data.message
           })
         }
