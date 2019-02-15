@@ -57,7 +57,6 @@ const apiUrl = 'http://localhost:3000/api/admin/login';
     methods: {
       login(){
         if(this.$refs.loginForm.validate()){
-          console.log('Logging ing')
           axios.post(apiUrl, {
             email: this.email,
             password: this.password,

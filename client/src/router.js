@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import SearchResult from './views/SearchResults.vue'
+import AddApartment from '@/components/AddApartment'
 import SearchPage from './views/SearchPage.vue'
 import AdminLogIn from './views/AdminLogIn.vue'
 import AdminDashboard from './views/AdminDashboard'
@@ -46,9 +46,14 @@ const router = new Router({
       component: AdminDashboard,
       children: [
         {
-          path: 'apartments',
+          path: '',
           component: DashboardSearch,
           name: 'dashboardSearch'
+        },
+        {
+          path:'add_apartment',
+          component: AddApartment,
+          name: 'addApartment'
         }
       ],
       meta: {
