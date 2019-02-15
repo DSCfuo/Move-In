@@ -64,7 +64,7 @@
     props: ['location', 'budget', 'apartment'],
     data: () => ({
       valid: false,
-      apartmentType: ['Office', 'Shop', 'Self Contain',
+      apartmentType: ['Office', 'Shop', 'Self contain',
                       '1 Bedroom apartment', '2 Bedroom apartment',
                       '3 Bedroom apartment', 'Duplex'],
       budgetRules: [
@@ -75,18 +75,28 @@
       ]
     }),
     methods: {
+        search(){
+            this.$store.dispatch('searchApartment', {location: this.location,
+                                budget: this.budget, 
+                                apartmentType: this.apartment? this.apartment: 'any'})
+        },
         submit(){
             if(this.$refs.form.validate()){
-                console.log(this.location, this.budget, this.apartment)
+                this.search()
                 this.$router.push({
                     name: 'search',
                     query: {
                         location: this.location,
                         budget: this.budget,
-                        apartment: this.apartment? this.apartment : 'any'
+                        apartmentType: this.apartment? this.apartment : 'any'
                     }
                 })
             }
+        }
+    },
+    created(){
+        if(this.location && this.budget){
+            this.search()
         }
     }
   }

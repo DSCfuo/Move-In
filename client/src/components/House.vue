@@ -41,7 +41,6 @@ export default {
     props: ['house'],
     computed: {
         status(){
-            console.log("House status", this.house.status)
             if(this.house.status === 1){
                 return 'Available'
             }else if(this.house.status === 2){
