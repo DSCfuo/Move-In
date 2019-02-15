@@ -24,6 +24,11 @@ export default new Vuex.Store({
     },
     searchQuery(state, search){
       state.searchQuery = search
+    },
+    removeApartment(state, id){
+      console.log("In store trying to remove", id)
+      state.searchResults = state.searchResults.filter(apartment => apartment.id !== id);
+      state.allApartments = state.allApartments.filter(apartment => apartment.id !== id);
     }
   },
   actions: {

@@ -2,9 +2,9 @@
   <div class="about">
     <SearchBox :location="location" :budget="budget" :apartment="apartment" :page="this.page"/>
     <v-container>
-      <h2 class="title my-3">Apartments in {{location}}</h2>
+      <h2 class="title my-3">{{location? `Apartments in ${location}` : 'All apartments'}}</h2>
       <div class="houses" v-show="searchResults.length > 0">
-        <House  v-for="apartment in searchResults" :key="apartment.id" :house="apartment"/>
+        <House  v-for="apartment in searchResults" :key="apartment.id" :house="apartment" :modify="modify"/>
       </div>
       <p class="subheading" v-show="searchResults.length === 0">No results found</p>
     </v-container>
@@ -18,7 +18,7 @@ const apiUrl = 'http://localhost:3000/api/apartments/search';
 import axios from 'axios';
 
 export default {
-  props: ['page'],
+  props: ['page', 'modify'],
   data(){
     return {
     }

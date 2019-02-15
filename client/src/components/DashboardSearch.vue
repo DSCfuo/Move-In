@@ -1,5 +1,5 @@
 <template>
-    <SearchResults page="dashboardSearch" />
+    <SearchResults page="dashboardSearch" modify="true" />
 </template>
 
 

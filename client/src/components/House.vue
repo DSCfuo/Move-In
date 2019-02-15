@@ -23,7 +23,7 @@
             <p>{{house.description}}</p>
           </div>
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions v-if="!modify">
             <v-btn flat color="primary">
                 <v-icon class="primary--text" left>email</v-icon>
                 <span>Send mail</span>
@@ -33,12 +33,42 @@
                 <span>Call</span>
             </v-btn>
         </v-card-actions>
+        <v-card-actions v-else>
+            <v-btn flat color="primary" @click="editApartment">
+                <v-icon class="primary--text" left>edit</v-icon>
+                <span>Edit</span>
+            </v-btn>
+            <v-btn flat color="red" @click="removeApartment">
+                <v-icon class="red--text" left>delete</v-icon>
+                <span>Remove</span>
+            </v-btn>
+        </v-card-actions>
         </v-card>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    props: ['house'],
+    props: ['house', 'modify'],
+    methods: {
+        editApartment(){
+            console.log("Edit apartment", this.house.address)
+        },
+        removeApartment(){
+            const token = localStorage.getItem('token');
+            const apiUrl = `http://localhost:3000/api/apartments/${this.house.id}`
+            axios.delete(apiUrl, {
+                headers: {
+                    'authorization': token,
+                }
+            })
+            .then((res) => {
+                console.log('Yaay successfully removed apartment');
+                this.$store.commit('removeApartment', this.house.id)
+            })
+            console.log("Remove apartment", this.house.address)
+        }
+    },
     computed: {
         status(){
             if(this.house.status === 1){
