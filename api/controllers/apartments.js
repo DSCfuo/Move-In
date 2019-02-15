@@ -85,7 +85,6 @@ exports.createApartment = async (req, res, next) => {
                                       description, address, owner_id) VALUES ($1, $2, $3, $4, $5, $6)`
         const apartmentValues = [location, price, apartmentType, description, address, owner_id];
         const insertedApartment = await db.query(insertApartmentQuery, apartmentValues);
-        console.log(insertedApartment)
         res.status(200).json({
             message: 'Apartment added successfully'
         })

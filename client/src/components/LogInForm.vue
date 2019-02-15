@@ -2,6 +2,7 @@
   <v-form class="login-form my-4" ref="loginForm">
     <v-container>
       <v-card class="pa-5">
+      <p class="red--text" v-if="loginError">{{loginError}}</p>
       <v-layout row wrap>
           <v-flex xs12>
             <v-text-field
@@ -9,6 +10,7 @@
               :rules="emailRules"
               label="E-mail"
               required
+              clearable
             ></v-text-field>
           </v-flex>
 
@@ -18,8 +20,8 @@
             :append-icon="password_show ? 'visibility_off' : 'visibility'"
             :rules="[rules.required]"
             :type="password_show ? 'text' : 'password'"
-            label="Enter password"
-            @click:append="show1 = !show1"
+            label="Password"
+            @click:append="password_show = !password_show"
           ></v-text-field>
           </v-flex>
 
@@ -33,6 +35,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+const apiUrl = 'http://localhost:3000/api/admin/login';
+
   export default {
     data () {
       return {
@@ -45,13 +50,26 @@
         password: '',
         rules: {
           required: value => !!value || 'Please enter your password',
-        }
+        },
+        loginError: '',
       }
     },
     methods: {
       login(){
         if(this.$refs.loginForm.validate()){
           console.log('Logging ing')
+          axios.post(apiUrl, {
+            email: this.email,
+            password: this.password,
+          })
+          .then(res => {
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('user', JSON.stringify(res.data.admin));
+            this.$router.push('/admin/dashboard')
+          })
+          .catch(err => {
+            this.loginError = err.response.data.message
+          })
         }
       }
     }

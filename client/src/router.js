@@ -10,7 +10,7 @@ import Apartments from './views/Apartments'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -48,7 +48,28 @@ export default new Router({
           path: 'booked',
           component: BookedApartment
         }
-      ]
+      ],
+      meta: {
+        requiresAuth: true,
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)){
+    if(localStorage.getItem('token') == null){
+      next({
+        path: '/admin/login',
+        params: {nextUrl: to.fullPath}
+      })
+    }else{
+      next();
+    }
+  }else{
+    next();
+  }
+
+})
+
+export default router;

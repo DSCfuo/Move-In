@@ -110,6 +110,11 @@ exports.logInAdmin = async (req, res) => {
             res.status(200).json({
                 message: 'Sign in successful',
                 token,
+                admin,
+            })
+        }else{
+            res.status(403).json({
+                message: 'Incorrect password'
             })
         }
     } catch (err) {
