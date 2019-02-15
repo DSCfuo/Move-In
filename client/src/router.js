@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import SearchResult from './views/SearchResults.vue'
+import SearchPage from './views/SearchPage.vue'
 import AdminLogIn from './views/AdminLogIn.vue'
 import AdminDashboard from './views/AdminDashboard'
-import BookedApartment from '@/components/BookedApartments.vue'
+import DashboardSearch from '@/components/DashboardSearch.vue'
 import ContactUs from './views/ContactUs'
 import Apartments from './views/Apartments'
 
@@ -22,7 +23,7 @@ const router = new Router({
     {
       path: '/search',
       name: 'search',
-      component: SearchResult
+      component: SearchPage
     },
     {
       path: '/apartments',
@@ -45,8 +46,9 @@ const router = new Router({
       component: AdminDashboard,
       children: [
         {
-          path: 'booked',
-          component: BookedApartment
+          path: 'apartments',
+          component: DashboardSearch,
+          name: 'dashboardSearch'
         }
       ],
       meta: {

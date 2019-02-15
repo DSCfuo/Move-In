@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <SearchBox :location="location" :budget="budget" :apartment="apartment" />
+    <SearchBox :location="location" :budget="budget" :apartment="apartment" :page="this.page"/>
     <v-container>
       <h2 class="title my-3">Apartments in {{location}}</h2>
       <div class="houses" v-show="searchResults.length > 0">
@@ -18,6 +18,7 @@ const apiUrl = 'http://localhost:3000/api/apartments/search';
 import axios from 'axios';
 
 export default {
+  props: ['page'],
   data(){
     return {
     }
@@ -30,13 +31,13 @@ export default {
       return this.$store.state.searchResults
     },
     location(){
-      return this.$route.query.location
+      return this.$store.state.searchQuery.location
     },
     budget(){
-      return this.$route.query.budget
+      return this.$store.state.searchQuery.budget
     },
     apartment(){
-      return this.$route.query.apartment
+      return this.$store.state.searchQuery.apartmentType
     }
   },
   components: {

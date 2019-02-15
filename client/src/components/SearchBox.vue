@@ -61,7 +61,7 @@
 
 <script>
   export default {
-    props: ['location', 'budget', 'apartment'],
+    props: ['location', 'budget', 'apartment', 'page'],
     data: () => ({
       valid: false,
       apartmentType: ['Office', 'Shop', 'Self contain',
@@ -82,14 +82,12 @@
         },
         submit(){
             if(this.$refs.form.validate()){
+                this.$store.commit('searchQuery', {location: this.location,
+                                                   budget: this.budget,
+                                                   apartmentType: this.apartment? this.apartment : 'any'})
                 this.search()
                 this.$router.push({
-                    name: 'search',
-                    query: {
-                        location: this.location,
-                        budget: this.budget,
-                        apartmentType: this.apartment? this.apartment : 'any'
-                    }
+                    name: this.page,
                 })
             }
         }
@@ -97,6 +95,8 @@
     created(){
         if(this.location && this.budget){
             this.search()
+        }else{
+            this.$store.dispatch('initialSearch')
         }
     }
   }

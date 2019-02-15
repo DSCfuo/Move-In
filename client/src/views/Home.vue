@@ -4,7 +4,7 @@
       <h2 class="display-2 mx-auto white--text">Find the perfect apartment</h2>
       <h5 class="title mx-auto white--text">Lorem ipsum dolor sit amet, consectetur adipiscing do
          eiusmod tempo incididunt ut labore et dolore magna aliqua.</h5>
-      <SearchBox location=""  />
+      <SearchBox :location="location" :budget="budget" :apartment="apartment" page="search" />
       <ReviewPopup />
     </div>
     <v-container>
@@ -119,6 +119,17 @@ import axios from 'axios';
           {img: '../../public/images/cinema.png', title: 'Reach more audience', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'},
           {img: '../../public/images/speed.png', title: 'Fast', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
         ]
+      }
+    },
+    computed: {
+      location(){
+      return this.$store.state.searchQuery.location
+      },
+      budget(){
+        return this.$store.state.searchQuery.budget
+      },
+      apartment(){
+        return this.$store.state.searchQuery.apartmentType
       }
     },
     components: {

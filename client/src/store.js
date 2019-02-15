@@ -8,10 +8,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     searchResults: [],
+    allApartments: [],
+    searchQuery: {
+      location: '',
+      budget: '',
+      apartmentType: '',
+    }
   },
   mutations: {
     updateSearchResults(state, results){
       state.searchResults = results
+    },
+    updateApartments(state, apartments){
+      state.allApartments = apartments
+    },
+    searchQuery(state, search){
+      state.searchQuery = search
     }
   },
   actions: {
@@ -24,6 +36,27 @@ export default new Vuex.Store({
         }
       })
       .then(res => {
+        context.commit('updateSearchResults', res.data.data)
+      })
+      .catch(err => {
+        console.log("Failed to search", err)
+      })
+    },
+
+    getAllApartments(context){
+      axios.get('http://localhost:3000/api/apartments')
+      .then(res => {
+        console.log("All apartments", res.data)
+        context.commit('updateApartments', res.data.data)
+      })
+      .catch(err => {
+        console.log("Failed to search", err)
+      })
+    },
+    initialSearch(context){
+      axios.get('http://localhost:3000/api/apartments')
+      .then(res => {
+        console.log("All apartments", res.data)
         context.commit('updateSearchResults', res.data.data)
       })
       .catch(err => {

@@ -16,20 +16,19 @@ const apiUrl = 'http://localhost:3000/api/apartments';
 export default {
     data(){
         return{
-            apartments: []
+            
         }
     },
     components:{
         House,
     },
+    computed: {
+        apartments(){
+            return this.$store.state.allApartments;
+        }
+    },
     created(){
-        axios.get(apiUrl)
-        .then((res) => {
-            this.apartments = res.data.data;
-        })
-        .catch((err) => {
-            console.log("Opps an error", err)
-        })
+        this.$store.dispatch('getAllApartments')
     }
 }
 </script>
