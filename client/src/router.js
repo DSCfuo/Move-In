@@ -54,6 +54,10 @@ const router = new Router({
           path:'add_apartment',
           component: AddApartment,
           name: 'addApartment'
+        },{
+          path:'edit_apartment/:id',
+          component: AddApartment,
+          name: 'editApartment',
         }
       ],
       meta: {

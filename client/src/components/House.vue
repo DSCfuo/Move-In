@@ -23,7 +23,7 @@
             <p>{{house.description}}</p>
           </div>
         </v-card-text>
-        <v-card-actions v-if="!modify">
+        <v-card-actions v-if="this.$route.name === 'search'">
             <v-btn flat color="primary">
                 <v-icon class="primary--text" left>email</v-icon>
                 <span>Send mail</span>
@@ -33,7 +33,7 @@
                 <span>Call</span>
             </v-btn>
         </v-card-actions>
-        <v-card-actions v-else>
+        <v-card-actions v-if="this.$route.name === 'dashboardSearch'">
             <v-btn flat color="primary" @click="editApartment">
                 <v-icon class="primary--text" left>edit</v-icon>
                 <span>Edit</span>
@@ -49,10 +49,11 @@
 <script>
 import axios from 'axios';
 export default {
-    props: ['house', 'modify'],
+    props: {house:{type: Object}, modify: {type: Boolean}},
     methods: {
         editApartment(){
             console.log("Edit apartment", this.house.address)
+            this.$router.push(`/admin/dashboard/edit_apartment/${this.house.id}`)
         },
         removeApartment(){
             const token = localStorage.getItem('token');

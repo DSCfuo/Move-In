@@ -32,6 +32,36 @@ const createOwner = async (name, email, phoneNumber) => {
     }
 }
 
+const getOwnerById = async (id) => {
+    try{
+        const getOwnerQuery = 'SELECT * FROM owners WHERE id = $1';
+        const owner = await db.query(getOwnerQuery, [id]);
+        return owner.rows[0];
+    }catch(err){
+        return next(err)
+    }
+}
+
+exports.getApartmentById = async (req, res, next) => {
+    const apartmentId = req.params.id;
+    try {
+        const apartment = await getApartmentById(apartmentId);
+        const owner = await getOwnerById(apartment.owner_id);
+        apartment.owner = owner;
+        if(apartment){
+            return res.status(200).json({
+                data: apartment
+            })
+        }else{
+            return res.status(400).json({
+                message: 'Apartment not found'
+            })
+        }
+    } catch (err) {
+        return next(err)
+    }
+}
+
 exports.getAllApartments = async (req, res) => {
     const dbResult = await db.query('SELECT * FROM houses');
     const apartments = dbResult.rows;
@@ -63,7 +93,7 @@ exports.searchForApartment = async (req, res) => {
 }
 
 exports.createApartment = async (req, res, next) => {
-    let {address, apartmentType, location, price, ownerName, ownerEmail, ownerPhone, description} = req.body;
+    let {address, apartmentType, location, price, status, ownerName, ownerEmail, ownerPhone, description} = req.body;
     let token = req.headers.authorization;
     if(!token){
         res.status(400).json({
@@ -82,8 +112,8 @@ exports.createApartment = async (req, res, next) => {
         let newOwner = await createOwner(ownerName, ownerEmail, ownerPhone);
         let owner_id = newOwner.rows[0].id;
         const insertApartmentQuery = `INSERT INTO houses (location, price, apartmenttype,
-                                      description, address, owner_id) VALUES ($1, $2, $3, $4, $5, $6)`
-        const apartmentValues = [location, price, apartmentType, description, address, owner_id];
+                                      description, status, address, owner_id) VALUES ($1, $2, $3, $4, $5, $6, $7)`
+        const apartmentValues = [location, price, apartmentType, description, status, address, owner_id];
         const insertedApartment = await db.query(insertApartmentQuery, apartmentValues);
         res.status(200).json({
             message: 'Apartment added successfully'

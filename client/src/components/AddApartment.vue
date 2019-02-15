@@ -48,6 +48,18 @@
                                 ></v-text-field>
                             </v-flex>
 
+                             <v-flex
+                                xs12
+                                md6
+                                class="px-2"
+                                >
+                                <v-select
+                                    :items="statusOptions"
+                                    v-model="status"
+                                    label="Status"
+                                    ></v-select>
+                            </v-flex>
+
                             <v-flex xs12 md6 class="px-2">
                                 <v-text-field
                                     v-model="owner.name"
@@ -96,11 +108,12 @@
 
 <script>
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/apartments';
+let apiUrl = 'http://localhost:3000/api/apartments';
 
 export default {
     data(){
         return {
+            editMode: false,
             address: '',
             addressRules: [
                 value => value.length >= 3 || 'Address must be at least three characters long'
@@ -125,6 +138,10 @@ export default {
             ],
             phoneRules: [
             ],
+            status: '',
+            statusOptions: [{text: 'To let', value: 1},
+                            {text: 'Booked', value: 2},
+                            {text: 'Unavailable', value:3}],
             description:'',
             addApartmentMessage: ''
         }
@@ -144,17 +161,26 @@ export default {
             if(this.$refs.addApartmentForm.validate()){
                 console.log("Submitting",this.address, this.apartment, this.location, this.price, this.owner.name, this.owner.email, this.owner.phone,
                 this.description);
-                const token = localStorage.getItem('token')
-                axios.post(apiUrl, {
-                    address: this.address,
-                    apartmentType: this.apartment,
-                    location: this.location,
-                    price: this.price,
-                    ownerName: this.owner.name,
-                    ownerEmail: this.owner.email,
-                    ownerPhone: this.owner.phone,
-                    description: this.description
-                }, {
+                const token = localStorage.getItem('token');
+                let httpMethod = 'post';
+                if(this.editMode){
+                    httpMethod = 'put';
+                    apiUrl = apiUrl+`/${this.$route.params.id}`
+                }
+                axios({
+                    method: httpMethod,
+                    url: apiUrl,
+                    data: {
+                        address: this.address,
+                        apartmentType: this.apartment,
+                        location: this.location,
+                        price: this.price,
+                        status: this.status,
+                        ownerName: this.owner.name,
+                        ownerEmail: this.owner.email,
+                        ownerPhone: this.owner.phone,
+                        description: this.description
+                    },
                     headers: {
                         'Content-Type': 'application/json',
                         'authorization': token,
@@ -162,13 +188,39 @@ export default {
                 })
                 .then(res => {
                     this.addApartmentMessage = res.data.message;
-                    this.clearInputFields()
+                    // this.clearInputFields()
                 })
                 .catch(err => {
                     this.addApartmentMessage = res.data.message
                     console.log("Oh no an error occured", err)
                 })
             }
+        }
+    },
+    created(){
+        console.log(this.$route);
+        if(this.$route.name === 'addApartment'){
+            console.log('Add apartment route')
+        }else if(this.$route.name === 'editApartment'){
+            this.editMode = true;
+            axios.get(apiUrl+`/${this.$route.params.id}`)
+            .then(res => {
+                let apartment = res.data.data;
+                console.log('Yay got single note ', res)
+                this.address = apartment.address;
+                this.apartment = apartment.apartmenttype;
+                this.location = apartment.location;
+                this.price = apartment.price;
+                this.status = apartment.status;
+                this.description = apartment.description;
+                this.owner.name = apartment.owner.name;
+                this.owner.email = apartment.owner.email;
+                this.owner.phone = apartment.owner.phone
+            })
+            .catch(err => {
+                console.log('An error occured! Shit!', err)
+            })
+            console.log('Edit apartment route', this.$route.params.id)
         }
     }
 }
