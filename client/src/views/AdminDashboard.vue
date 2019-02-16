@@ -55,7 +55,7 @@
         items: [
           { title: 'All apartments', icon: 'home', route: '/admin/dashboard' },
           { title: 'Add Apartment', icon: 'add', route: '/admin/dashboard/add_apartment' },
-          { title: 'New Listings', icon: 'list' }
+          { title: 'New Listings', icon: 'list', route: '/admin/dashboard/listings' }
         ],
         right: null
       }

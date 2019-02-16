@@ -9,6 +9,7 @@ import DashboardSearch from '@/components/DashboardSearch.vue'
 import ContactUs from './views/ContactUs'
 import Apartments from './views/Apartments'
 import SubmitListing from './views/SubmitListing';
+import DashboardListing from '@/components/DashboardListings'
 
 Vue.use(Router)
 
@@ -60,10 +61,16 @@ const router = new Router({
           path:'add_apartment',
           component: AddApartment,
           name: 'addApartment'
-        },{
+        },
+        {
           path:'edit_apartment/:id',
           component: AddApartment,
           name: 'editApartment',
+        },
+        {
+          path: 'listings',
+          component: DashboardListing,
+          name: 'dashboardListing'
         }
       ],
       meta: {
