@@ -12,7 +12,8 @@
                         </div>
                     </v-flex>
                     <v-flex xs12 md7>
-                        <v-form>
+                        <v-form ref="contactForm">
+                            <p class="primary--text" v-if="contactFormMessage">{{contactFormMessage}}</p>
                             <v-layout row wrap>
                                 <v-flex xs12>
                                     <v-text-field
@@ -45,7 +46,7 @@
                                 </v-flex>
 
                             </v-layout>
-                            <v-btn class="primary mx-0" @click="login">
+                            <v-btn class="primary mx-0" @click="sendMessage">
                                 <span>Send message</span>
                             </v-btn>
                         </v-form>
@@ -58,6 +59,9 @@
 
 <script>
 import Header from '@/components/Header'
+import axios from 'axios';
+const apiUrl = 'http://localhost:3000/api/contact';
+
 export default {
     data(){
         return{
@@ -75,7 +79,27 @@ export default {
                 {icon: 'location_on', text: '1234 Yenagoa, Bayelsa State'},
                 {icon: 'email', text: 'hello@movein.com'},
                 {icon: 'phone', text: '+234 708 543 6753'}
-            ]
+            ],
+            contactFormMessage: '',
+        }
+    },
+    methods: {
+        sendMessage(){
+            if(this.$refs.contactForm.validate()){
+                console.log("About to send the contact form", this.name, this.email, this.message);
+                axios.post(apiUrl, {
+                    name: this.name,
+                    email: this.email,
+                    message: this.message,
+                })
+                .then(res => {
+                    this.contactFormMessage = res.data.message;
+                })
+                .catch(err => {
+                    console.log("Couldnt send mail", err);
+                    this.contactFormMessage = err.response.data.message
+                })
+            }
         }
     },
     components: {
