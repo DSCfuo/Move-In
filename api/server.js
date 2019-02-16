@@ -12,6 +12,7 @@ const apartmentsRoute = require('./routes/apartments')
 const newsletterRoute = require('./routes/newsletter');
 const reviewsRoute = require('./routes/reviews');
 const contactUsRoute = require('./routes/contact');
+const listingRoute = require('./routes/listings');
 
 const app = express();
 
@@ -36,7 +37,8 @@ app.use('/api/admin', adminRoute);
 app.use('/api/apartments', apartmentsRoute);
 app.use('/api/newsletter', newsletterRoute);
 app.use('/api/reviews', reviewsRoute);
-app.use('/api/contact', contactUsRoute)
+app.use('/api/contact', contactUsRoute);
+app.use('/api/listings', listingRoute)
 
 app.use((req, res, next) => {
     res.status(404).json({
