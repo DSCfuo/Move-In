@@ -1,6 +1,6 @@
 const {Client} = require('pg')
 const dotenv = require('dotenv')
-const {adminTable, houseTable, ownerTable, subscribersTable, reviewsTable} = require('./tables')
+const {adminTable, houseTable, listingsTable, ownerTable, subscribersTable, reviewsTable} = require('./tables')
 
 dotenv.config();
 
@@ -12,13 +12,14 @@ const createTables = async () => {
         await client.query(adminTable),
         await client.query(ownerTable),
         await client.query(houseTable),
+        await client.query(listingsTable)
         await client.query(subscribersTable);
         await client.query(reviewsTable);
         await client.end()
         console.log('Tables created successfully');
         process.exit(0)
     }catch(e){
-        console.log('Something bad happened', e)
+        console.log('Failed to create tables', e)
     }
     
 }

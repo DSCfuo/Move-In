@@ -23,6 +23,21 @@ CREATE TABLE IF NOT EXISTS houses(
 );
 `;
 
+exports.listingsTable = `
+CREATE TABLE IF NOT EXISTS listings(
+    id SERIAL,
+    location VARCHAR(128) NOT NULL,
+    price INTEGER NOT NULL,
+    apartmentType VARCHAR(128) NOT NULL,
+    status INTEGER DEFAULT 1,
+    description VARCHAR(128) NOT NULL,
+    address VARCHAR(128) NOT NULL,
+    owner_name VARCHAR(128) NOT NULL,
+    owner_email VARCHAR(128) NOT NULL,
+    owner_phone VARCHAR(128) NOT NULL, 
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+)`
+
 exports.ownerTable = `
 CREATE TABLE IF NOT EXISTS owners(
     id SERIAL PRIMARY KEY,
