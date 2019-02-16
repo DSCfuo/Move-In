@@ -8,6 +8,7 @@ import AdminDashboard from './views/AdminDashboard'
 import DashboardSearch from '@/components/DashboardSearch.vue'
 import ContactUs from './views/ContactUs'
 import Apartments from './views/Apartments'
+import SubmitListing from './views/SubmitListing';
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ const router = new Router({
       path: '/apartments',
       name: 'apartments',
       component: Apartments
+    },
+    {
+      path: '/new_listing',
+      name: 'newListing',
+      component: SubmitListing
     },
     {
       path: '/contact',
