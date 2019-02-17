@@ -1,5 +1,11 @@
 const db = require('../db/index');
 
+const getListingById = async (id) => {
+    const getListingQuery = 'SELECT * FROM listings WHERE id = $1';
+    let queryResult = await db.query(getListingQuery, [id]);
+    return queryResult.rows[0];
+}
+
 exports.getAllListings = async (req, res) => {
     const getAllListingsQuery = 'SELECT * FROM listings';
     try {
@@ -29,5 +35,20 @@ exports.createListing = async(req, res, next) => {
     } catch (err) {
         console.log('An error occured while creating a listing', err);
         return next(err);
+    }
+}
+
+exports.removeListing = async (req, res) => {
+    const listingId = req.params.id;
+    try {
+        let listing = await getListingById(listingId);
+        console.log("About to remove this listing", listing)
+        let removeListingQuery = 'DELETE FROM listings where id = $1';
+        let queryResult = await db.query(removeListingQuery, [listing.id]);
+        return res.status(200).json({
+            message: 'Successfully removed listing'
+        }) 
+    } catch (err) {
+        console.log("An error occured trying to remove a listing", err)
     }
 }

@@ -13,7 +13,8 @@ export default new Vuex.Store({
       location: '',
       budget: '',
       apartmentType: '',
-    }
+    },
+    listings: [],
   },
   mutations: {
     updateSearchResults(state, results){
@@ -29,6 +30,13 @@ export default new Vuex.Store({
       console.log("In store trying to remove", id)
       state.searchResults = state.searchResults.filter(apartment => apartment.id !== id);
       state.allApartments = state.allApartments.filter(apartment => apartment.id !== id);
+    },
+    setListings(state,listings){
+      state.listings = listings;
+    },
+    removeListing(state, id){
+      console.log("In store trying to remove listing", id);
+      state.listings = state.listings.filter((listing) => listing.id !== id);
     }
   },
   actions: {
@@ -67,6 +75,16 @@ export default new Vuex.Store({
       .catch(err => {
         console.log("Failed to search", err)
       })
+    },
+    getListings(context){
+      axios.get('http://localhost:3000/api/listings')
+        .then(res => {
+            context.commit('setListings', res.data.data)
+            this.listings = res.data.data
+        })
+        .catch(err => {
+            console.log("Failed to fetch listings", err)
+        })
     }
   },
   getters: {

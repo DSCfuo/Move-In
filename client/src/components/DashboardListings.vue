@@ -3,7 +3,13 @@
         <v-container>
             <h1 class="title mb-4">View all submitted listings</h1>
 
-            <Listing v-for="listing in listings" :listing="listing" :key="listing.id" />
+            <Listing v-show="listings.length>0" v-for="listing in listings" :listing="listing" :key="listing.id" />
+            <v-card class="py-5" height="400px" v-show="listings.length === 0">
+                <img class="empty-icon" src="../../public/images/box.png">
+                <v-card-text>
+                    <p class="title text-xs-center">There are no current listings</p>
+                </v-card-text>
+            </v-card>
         </v-container>
     </div>
 </template>
@@ -14,22 +20,16 @@ import axios from 'axios';
 const apiUrl = 'http://localhost:3000/api/listings';
 
 export default {
-    data(){
-        return {
-            listings: undefined
-        }
-    },
     components: {
         Listing,
     },
+    computed: {
+        listings(){
+            return this.$store.state.listings
+        }
+    },
     created(){
-        axios.get(apiUrl)
-        .then(res => {
-            this.listings = res.data.data
-        })
-        .catch(err => {
-            console.log("Failed to fetch listings", err)
-        })
+        this.$store.dispatch('getListings');
     }
 }
 </script>
@@ -37,6 +37,10 @@ export default {
 <style scoped>
 .listings{
     width: 100%;
+}
+.empty-icon{
+    display: block;
+    margin: auto;
 }
 </style>
 

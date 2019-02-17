@@ -12,7 +12,7 @@
             <v-toolbar-items>
                 <v-btn flat router to="/" class="text-capitalize">Home</v-btn>
                 <v-btn flat router to="/apartments" class="text-capitalize">Apartments</v-btn>
-                <v-btn flat router to="/create_listing" class="text-capitalize">Create a listing</v-btn>
+                <v-btn flat router to="/new_listing" class="text-capitalize">Create a listing</v-btn>
                 <v-btn flat router to="/contact" class="text-capitalize">Contact Us</v-btn>
         </v-toolbar-items>
         </v-toolbar>
