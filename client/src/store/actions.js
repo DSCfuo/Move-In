@@ -1,45 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
 import axios from 'axios'
 const apiUrl = 'http://localhost:3000/api/apartments/search';
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  state: {
-    searchResults: [],
-    allApartments: [],
-    searchQuery: {
-      location: '',
-      budget: '',
-      apartmentType: '',
-    },
-    listings: [],
-  },
-  mutations: {
-    updateSearchResults(state, results){
-      state.searchResults = results
-    },
-    updateApartments(state, apartments){
-      state.allApartments = apartments
-    },
-    searchQuery(state, search){
-      state.searchQuery = search
-    },
-    removeApartment(state, id){
-      console.log("In store trying to remove", id)
-      state.searchResults = state.searchResults.filter(apartment => apartment.id !== id);
-      state.allApartments = state.allApartments.filter(apartment => apartment.id !== id);
-    },
-    setListings(state,listings){
-      state.listings = listings;
-    },
-    removeListing(state, id){
-      console.log("In store trying to remove listing", id);
-      state.listings = state.listings.filter((listing) => listing.id !== id);
-    }
-  },
-  actions: {
+const actions = {
     searchApartment(context, {location, budget, apartmentType}){
       axios.get(apiUrl, {
         params: {
@@ -86,10 +48,6 @@ export default new Vuex.Store({
             console.log("Failed to fetch listings", err)
         })
     }
-  },
-  getters: {
-    getsearchResults(state){
-      return state.searchResults
-    }
   }
-})
+
+  export default actions;
