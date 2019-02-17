@@ -72,7 +72,8 @@ export default {
                     this.newsletter_message = res.data.message
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err.response);
+                    this.newsletter_message = err.response.data.message
                 })
             }
         }

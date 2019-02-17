@@ -1,4 +1,5 @@
 const db = require('../db/index');
+const sendMail = require('../mailer/mailer');
 
 const getSubscriberByEmail = async (email) => {
     const queryResult = await db.query('SELECT * FROM subscribers WHERE email = $1', [email]);
@@ -33,6 +34,15 @@ exports.addNewSubscriber = async (req, res, next) => {
     
         const insertSubscriberQuery = 'INSERT INTO subscribers (email) VALUES ($1)';
         const queryResult = await db.query(insertSubscriberQuery, [email]);
+        const mailOptions = {
+            to: email,
+            subject: `Thank you for subscribing to our newsletter`,
+            text: `Thank you for subscribing to the Move in newsletter. You will receive latest offers, new deals, new apartments added and a lot of other fun stuff.
+            \nCheers \nThe Move in Team`
+        }
+
+        let mailStatus = await sendMail(mailOptions);
+        console.log('Sent mail', mailStatus)
         res.status(200).json({
             message: 'Successfully added to mailing list'
         })

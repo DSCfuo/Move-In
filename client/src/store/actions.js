@@ -11,6 +11,8 @@ const actions = {
         }
       })
       .then(res => {
+          console.log("Search res", res)
+          console.log("Search results from store", res.data.data)
         context.commit('updateSearchResults', res.data.data)
       })
       .catch(err => {
