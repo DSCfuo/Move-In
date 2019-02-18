@@ -10,6 +10,7 @@ import ContactUs from './views/ContactUs'
 import Apartments from './views/Apartments'
 import SubmitListing from './views/SubmitListing';
 import DashboardListing from '@/components/DashboardListings'
+import PageNotFound from './views/PageNotFound'
 
 Vue.use(Router)
 
@@ -76,6 +77,10 @@ const router = new Router({
       meta: {
         requiresAuth: true,
       }
+    },
+    {
+      path: '*',
+      component: PageNotFound
     }
   ]
 })
