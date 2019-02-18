@@ -4,7 +4,7 @@
             <v-form ref="addApartmentForm">
                 <v-card>
                     <v-card-title>
-                        <h1 class="title">Add apartment</h1>
+                        <h1 class="title">{{pageTitle}}</h1>
                     </v-card-title>
                     <v-card-text>
                         <p v-if="addApartmentMessage">{{addApartmentMessage}}</p>
@@ -98,7 +98,7 @@
                                     ></v-textarea>
                             </v-flex>
                         </v-layout>
-                        <v-btn class="primary" @click="addApartment">Add apartment</v-btn>
+                        <v-btn class="primary" @click="addApartment">Submit</v-btn>
                     </v-card-text>
                 </v-card>
             </v-form>
@@ -114,6 +114,7 @@ export default {
     data(){
         return {
             editMode: false,
+            pageTitle: 'Add apartment',
             address: '',
             addressRules: [
                 value => value.length >= 3 || 'Address must be at least three characters long'
@@ -200,9 +201,11 @@ export default {
     created(){
         console.log(this.$route);
         if(this.$route.name === 'addApartment'){
+            this.pageTitle = 'Add Apartment'
             console.log('Add apartment route')
         }else if(this.$route.name === 'editApartment'){
             this.editMode = true;
+            this.pageTitle = 'Edit Apartment'
             axios.get(apiUrl+`/${this.$route.params.id}`)
             .then(res => {
                 let apartment = res.data.data;
