@@ -14,6 +14,8 @@ const reviewsRoute = require('./routes/reviews');
 const contactUsRoute = require('./routes/contact');
 const listingRoute = require('./routes/listings');
 
+ require('./mailer/newsletter_cronjob');
+
 const app = express();
 
 if(NODE_ENV === 'production'){
