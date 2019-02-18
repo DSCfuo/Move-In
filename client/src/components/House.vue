@@ -8,7 +8,7 @@
           <v-container fill-height fluid>
             <v-layout fill-height>
               <v-flex xs12 align-end flexbox>
-                <span class="headline primary white--text pa-2">{{status}}</span>
+                <span :class="['headline', status, 'white--text', 'pa-2']">{{status}}</span>
               </v-flex>
             </v-layout>
           </v-container>
@@ -88,5 +88,17 @@ export default {
 .primary-info{
     display: flex;
     justify-content: space-between
+}
+
+.Available{
+    background-color: #6186E6;
+}
+
+.Booked{
+    background-color: orange;
+}
+
+.Unavailable{
+    background-color: red;
 }
 </style>

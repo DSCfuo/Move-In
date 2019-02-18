@@ -46,7 +46,10 @@ const router = new Router({
     {
       path: '/admin/login',
       name: 'adminLogin',
-      component: AdminLogIn
+      component: AdminLogIn,
+      meta: {
+        guest: true,
+      }
     },
     {
       path: '/admin/dashboard',
@@ -94,6 +97,12 @@ router.beforeEach((to, from, next) => {
       })
     }else{
       next();
+    }
+  }else if(to.matched.some(record => record.meta.guest)){
+    if(localStorage.getItem('token') == null){
+      next()
+    }else{
+      next({name: 'dashboardSearch'})
     }
   }else{
     next();
