@@ -5,6 +5,11 @@ An apartment rental application which allows property owners and proposed tenant
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
+
+![alt text](https://github.com/georgeben/Move-In/blob/development/screenshots/home.png "Homepage screenshot")
+
+![alt text](https://github.com/georgeben/Move-In/blob/development/screenshots/dashboard.PNG "Dashboard screenshott")
+
 ## Technologies
 - :boom: Node
 - :fire: Express
