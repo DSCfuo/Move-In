@@ -17,7 +17,9 @@ CREATE TABLE IF NOT EXISTS houses(
     apartmentType VARCHAR(128) NOT NULL,
     status INTEGER DEFAULT 1,
     description VARCHAR(128) NOT NULL,
-    ADDRESS VARCHAR(128) NOT NULL,
+    address VARCHAR(128) NOT NULL,
+    image_url VARCHAR(128) NOT NULL,
+    image_id VARCHAR(128) NOT NULL,
     owner_id INTEGER REFERENCES owners(id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

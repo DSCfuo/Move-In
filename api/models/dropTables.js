@@ -19,6 +19,9 @@ const dropTables = async () => {
 
     await client.query('DROP TABLE IF EXISTS subscribers;');
     console.log('DROPPED TABLE subscribers')
+
+    await client.query('DROP TABLE IF EXISTS listings;');
+    console.log('DROPPED TABLE listings')
     process.exit(0);
 }
 
