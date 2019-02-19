@@ -8,7 +8,7 @@
                     </v-card-title>
                     <v-card-text>
                         <p v-if="addApartmentMessage">{{addApartmentMessage}}</p>
-                        <img :src="imageUrl" height="150" v-if="imageUrl"/>
+                        <img class="apartment-img" :src="imageUrl" v-if="imageUrl"/>
                         <v-layout row wrap justify-space-between>
                             <v-flex xs12 md6 class="px-2">
                                 <v-text-field
@@ -96,7 +96,6 @@
                                     <v-icon left>attach_file</v-icon>
                                     Select Apartment photo
                                 </v-btn>
-                                <!-- <v-text-field label="Choose apartment image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field> -->
                                 <span class="ml-3">{{imageName}}</span>
                                 <input
                                     type="file"
@@ -183,7 +182,7 @@ export default {
 				fr.readAsDataURL(files[0])
 				fr.addEventListener('load', () => {
 					this.imageUrl = fr.result
-					this.imageFile = files[0] // this is an image file that can be sent to server...
+					this.imageFile = files[0] 
 				})
 			} else {
 				this.imageName = 'No image selected yet'
@@ -243,7 +242,7 @@ export default {
                 })
                 .catch(err => {
                     this.addApartmentMessage = err.response.data.message
-                    console.log("Oh no an error occured", err)
+                    console.log("An error occured", err)
                 })
             }
         }
@@ -251,7 +250,6 @@ export default {
     created(){
         if(this.$route.name === 'addApartment'){
             this.pageTitle = 'Add Apartment'
-            console.log('Add apartment route')
         }else if(this.$route.name === 'editApartment'){
             this.editMode = true;
             this.pageTitle = 'Edit Apartment'
@@ -270,9 +268,8 @@ export default {
                 this.owner.phone = apartment.owner.phone
             })
             .catch(err => {
-                console.log('An error occured! Shit!', err)
+                console.log('An error occured!', err)
             })
-            console.log('Edit apartment route', this.$route.params.id)
         }
     }
 }
@@ -281,5 +278,12 @@ export default {
 <style scoped>
 .add-apartment{
     width: 100%
+}
+
+.apartment-img{
+    display: block;
+    width: 50%;
+    max-height: 250px;
+    margin: 0 auto 10px auto;
 }
 </style>

@@ -63,12 +63,11 @@ export default {
     methods: {
         subscribe(){
             if(this.$refs.newsletter_subscription.validate()){
-                console.log("Subscribing to new letter");
                 axios.post(apiUrl, {
                     email: this.email,
                 })
                 .then(res => {
-                    console.log('Yaaay!', res.data.message)
+                    console.log('Server response', res.data.message)
                     this.newsletter_message = res.data.message
                 })
                 .catch(err => {

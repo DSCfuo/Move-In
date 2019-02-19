@@ -62,7 +62,6 @@
     },
     methods: {
       logout(){
-        console.log("About to logout")
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         this.$router.push('/')

@@ -52,7 +52,6 @@ export default {
     props: {house:{type: Object}, modify: {type: Boolean}},
     methods: {
         editApartment(){
-            console.log("Edit apartment", this.house.address)
             this.$router.push(`/admin/dashboard/edit_apartment/${this.house.id}`)
         },
         removeApartment(){
@@ -64,10 +63,9 @@ export default {
                 }
             })
             .then((res) => {
-                console.log('Yaay successfully removed apartment');
+                console.log('Successfully removed apartment');
                 this.$store.commit('removeApartment', this.house.id)
             })
-            console.log("Remove apartment", this.house.address)
         }
     },
     computed: {

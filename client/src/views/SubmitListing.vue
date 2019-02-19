@@ -155,7 +155,7 @@ export default {
                 })
                 .catch(err => {
                     this.submitListingMessage = res.data.message
-                    console.log("Oh no an error occured", err)
+                    console.log("An error occured", err)
                 })
             }
         }
