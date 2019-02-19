@@ -22,6 +22,7 @@ const storage = new cloudinaryStorage({
 })
 
 const parser = multer({storage: storage})
+exports.imgParser = parser;
 
 const verifyToken = async (token) => {
     return new Promise((resolve, reject) => {
@@ -115,6 +116,8 @@ exports.searchForApartment = async (req, res) => {
 }
 
 exports.createApartment = async (req, res, next) => {
+    console.log(req.file);
+    // return res.send('Working on something')
     let {address, apartmentType, location, price, status, ownerName, ownerEmail, ownerPhone, description} = req.body;
     let token = req.headers.authorization;
     if(!token){

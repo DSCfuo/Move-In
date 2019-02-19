@@ -5,7 +5,7 @@ const apartmentController = require('../controllers/apartments')
 router.get('/', apartmentController.getAllApartments);
 router.get('/search', apartmentController.searchForApartment);
 router.get('/:id', apartmentController.getApartmentById)
-router.post('/', apartmentController.createApartment);
+router.post('/', apartmentController.imgParser.single("apartmentImg"), apartmentController.createApartment);
 router.put('/:id', apartmentController.updateApartment);
 router.delete('/:id', apartmentController.deleteApartment)
 
