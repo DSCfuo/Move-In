@@ -116,8 +116,6 @@ exports.searchForApartment = async (req, res) => {
 }
 
 exports.createApartment = async (req, res, next) => {
-    console.log(req.file);
-    // return res.send('Working on something')
     let {address, apartmentType, location, price, status, ownerName, ownerEmail, ownerPhone, description} = req.body;
     let token = req.headers.authorization;
     if(!token){
@@ -137,8 +135,8 @@ exports.createApartment = async (req, res, next) => {
         let newOwner = await createOwner(ownerName, ownerEmail, ownerPhone);
         let owner_id = newOwner.rows[0].id;
         const insertApartmentQuery = `INSERT INTO houses (location, price, apartmenttype,
-                                      description, status, address, owner_id) VALUES ($1, $2, $3, $4, $5, $6, $7)`
-        const apartmentValues = [location, price, apartmentType, description, status, address, owner_id];
+                                      description, status, address, owner_id, image_url, image_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
+        const apartmentValues = [location, price, apartmentType, description, status, address, owner_id, req.file.url, req.file.public_id];
         const insertedApartment = await db.query(insertApartmentQuery, apartmentValues);
         res.status(200).json({
             message: 'Apartment added successfully'
