@@ -8,6 +8,7 @@
                     </v-card-title>
                     <v-card-text>
                         <p v-if="addApartmentMessage">{{addApartmentMessage}}</p>
+                        <img :src="imageUrl" height="150" v-if="imageUrl"/>
                         <v-layout row wrap justify-space-between>
                             <v-flex xs12 md6 class="px-2">
                                 <v-text-field
@@ -91,6 +92,22 @@
                             </v-flex>
 
                             <v-flex xs12 class="px-2">
+                                <v-btn flat class="primary" @click="pickFile">
+                                    <v-icon left>attach_file</v-icon>
+                                    Select Apartment photo
+                                </v-btn>
+                                <!-- <v-text-field label="Choose apartment image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field> -->
+                                <span class="ml-3">{{imageName}}</span>
+                                <input
+                                    type="file"
+                                    style="display: none"
+                                    ref="image"
+                                    accept="image/*"
+                                    @change="onFilePicked"
+                                >
+                            </v-flex>
+
+                            <v-flex xs12 class="px-2">
                                 <v-textarea
                                     label="Apartment description"
                                     v-model="description"
@@ -144,10 +161,36 @@ export default {
                             {text: 'Booked', value: 2},
                             {text: 'Unavailable', value:3}],
             description:'',
+            imageName: 'No image selected yet',
+            imageUrl: '',
+            imageFile: '',
             addApartmentMessage: ''
         }
     },
     methods: {
+        pickFile () {
+            this.$refs.image.click ()
+        },
+		
+		onFilePicked (e) {
+			const files = e.target.files
+			if(files[0] !== undefined) {
+				this.imageName = files[0].name
+				if(this.imageName.lastIndexOf('.') <= 0) {
+					return
+				}
+				const fr = new FileReader ()
+				fr.readAsDataURL(files[0])
+				fr.addEventListener('load', () => {
+					this.imageUrl = fr.result
+					this.imageFile = files[0] // this is an image file that can be sent to server...
+				})
+			} else {
+				this.imageName = 'No image selected yet'
+				this.imageFile = ''
+				this.imageUrl = ''
+			}
+		},
         clearInputFields(){
             this.address = '';
             this.apartment = '';
@@ -160,6 +203,10 @@ export default {
         },
         addApartment(){
             if(this.$refs.addApartmentForm.validate()){
+                if(this.imageFile === ''){
+                    this.addApartmentMessage = "Please select a file"
+                    return;
+                }
                 console.log("Submitting",this.address, this.apartment, this.location, this.price, this.owner.name, this.owner.email, this.owner.phone,
                 this.description);
                 const token = localStorage.getItem('token');
