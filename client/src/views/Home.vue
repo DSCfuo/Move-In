@@ -2,8 +2,9 @@
   <div class="home white">
     <div class="showcase pt-5">
       <h2 class="display-2 mx-auto white--text">Find the perfect apartment</h2>
-      <h5 class="title mx-auto white--text">Lorem ipsum dolor sit amet, consectetur adipiscing do
-         eiusmod tempo incididunt ut labore et dolore magna aliqua.</h5>
+      <h5 class="title mx-auto white--text">Search for available houses, shops and offices in the location you want, at the price you want.
+        Your pergect apartment is just a click away
+      </h5>
       <SearchBox :location="location" :budget="budget" :apartment="apartment" page="search" />
       <ReviewPopup />
     </div>
@@ -11,9 +12,17 @@
         <div class="cities">
           <h2 class="title my-3">Popular Cities</h2>
           <v-layout row wrap justify-space-between>
-            <v-flex xs12 md3 class="city" v-for="city in cities" :key="city">
+            <v-flex xs12 md3 class="city">
               <img src="../../public/images/lagos.jpg" alt="Failed to load Image">
-              <p>{{city}}</p>
+              <p>Lagos</p>
+            </v-flex>
+            <v-flex xs12 md3 class="city">
+              <img src="../../public/images/imo.jpg" alt="Failed to load Image">
+              <p>Imo</p>
+            </v-flex>
+            <v-flex xs12 md3 class="city">
+              <img src="../../public/images/abuja.jpg" alt="Failed to load Image">
+              <p>Abuja</p>
             </v-flex>
           </v-layout>
         </div>
@@ -112,7 +121,6 @@ import axios from 'axios';
   export default {
     data(){
       return{
-        cities: ['Lagos', 'Abuja', 'Ibadan'],
         features: [
           {img: '../../public/images/happiness.png', title: 'Simple and easy to use', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'},
           {img: '../../public/images/naira.png', title: 'Affordable', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'},
@@ -156,6 +164,7 @@ import axios from 'axios';
 }
 .city img{
   width: 100%;
+  height: 80%;
 }
 
 .features{
