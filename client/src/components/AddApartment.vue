@@ -215,38 +215,40 @@ export default {
                     httpMethod = 'put';
                     apiUrl = apiUrl+`/${this.$route.params.id}`
                 }
+                let formData = new FormData();
+                formData.append('apartmentImg', this.imageFile);
+                formData.append('address', this.address);
+                formData.append('apartmentType', this.apartment);
+                formData.append('location', this.location);
+                formData.append('price', this.price);
+                formData.append('status', this.status);
+                formData.append('ownerName', this.owner.name);
+                formData.append('ownerEmail', this.owner.email);
+                formData.append('ownerPhone', this.owner.phone);
+                formData.append('description', this.description);
+
                 axios({
                     method: httpMethod,
                     url: apiUrl,
-                    data: {
-                        address: this.address,
-                        apartmentType: this.apartment,
-                        location: this.location,
-                        price: this.price,
-                        status: this.status,
-                        ownerName: this.owner.name,
-                        ownerEmail: this.owner.email,
-                        ownerPhone: this.owner.phone,
-                        description: this.description
-                    },
+                    data: formData,
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data',
                         'authorization': token,
                     }
+                    
                 })
                 .then(res => {
                     this.addApartmentMessage = res.data.message;
                     // this.clearInputFields()
                 })
                 .catch(err => {
-                    this.addApartmentMessage = res.data.message
+                    this.addApartmentMessage = err.response.data.message
                     console.log("Oh no an error occured", err)
                 })
             }
         }
     },
     created(){
-        console.log(this.$route);
         if(this.$route.name === 'addApartment'){
             this.pageTitle = 'Add Apartment'
             console.log('Add apartment route')

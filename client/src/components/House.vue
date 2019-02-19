@@ -3,7 +3,7 @@
           <v-img
           class="white--text"
           height="200px"
-          :src="require('../../public/images/lagos.jpg')"
+          :src="house.image_url"
         >
           <v-container fill-height fluid>
             <v-layout fill-height>
