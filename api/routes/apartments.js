@@ -7,6 +7,7 @@ router.get('/', apartmentController.getAllApartments);
 router.get('/search', apartmentController.searchForApartment);
 router.get('/:id', apartmentController.getApartmentById)
 router.post('/', imgParser.single("apartmentImg"), apartmentController.createApartment);
+router.post('/approve_listing', imgParser.none(), apartmentController.createApartment)
 router.put('/:id', apartmentController.updateApartment);
 router.delete('/:id', apartmentController.deleteApartment)
 

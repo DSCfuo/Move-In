@@ -1,28 +1,6 @@
 require('dotenv').config();
 const db = require('../db/index');
 const jwt = require('jsonwebtoken');
-const multer = require('multer');
-const cloudinary = require('cloudinary');
-const cloudinaryStorage = require('multer-storage-cloudinary');
-
-const apartmentImgWidth = 284;
-const apartmentImgHeight = 178;
-
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-})
-
-const storage = new cloudinaryStorage({
-    cloudinary: cloudinary,
-    folder: 'move-in apartments',
-    allowedFormats: ['jpg', 'png'],
-    transformation: [{width: apartmentImgWidth, height: apartmentImgHeight, crop: 'limit'}]
-})
-
-const parser = multer({storage: storage})
-exports.imgParser = parser;
 
 const verifyToken = async (token) => {
     return new Promise((resolve, reject) => {
@@ -116,7 +94,11 @@ exports.searchForApartment = async (req, res) => {
 }
 
 exports.createApartment = async (req, res, next) => {
-    let {address, apartmentType, location, price, status, ownerName, ownerEmail, ownerPhone, description} = req.body;
+    let {address, apartmentType, location, price, status, ownerName, ownerEmail, ownerPhone, description, image_url, image_id} = req.body;
+    if(!image_url || !image_id){
+        image_url = req.file.url;
+        image_id = req.file.public_id
+    }
     let token = req.headers.authorization;
     if(!token){
         res.status(400).json({
@@ -136,7 +118,7 @@ exports.createApartment = async (req, res, next) => {
         let owner_id = newOwner.rows[0].id;
         const insertApartmentQuery = `INSERT INTO houses (location, price, apartmenttype,
                                       description, status, address, owner_id, image_url, image_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
-        const apartmentValues = [location, price, apartmentType, description, status, address, owner_id, req.file.url, req.file.public_id];
+        const apartmentValues = [location, price, apartmentType, description, status, address, owner_id, image_url, image_id];
         const insertedApartment = await db.query(insertApartmentQuery, apartmentValues);
         res.status(200).json({
             message: 'Apartment added successfully'
