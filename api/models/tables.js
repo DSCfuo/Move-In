@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS listings(
     status INTEGER DEFAULT 1,
     description VARCHAR(128) NOT NULL,
     address VARCHAR(128) NOT NULL,
+    image_url VARCHAR(128) NOT NULL,
+    image_id VARCHAR(128) NOT NULL,
     owner_name VARCHAR(128) NOT NULL,
     owner_email VARCHAR(128) NOT NULL,
     owner_phone VARCHAR(128) NOT NULL, 

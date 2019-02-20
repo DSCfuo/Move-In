@@ -9,6 +9,7 @@
                     </v-card-title>
                     <v-card-text>
                         <p class="primary--text" v-if="submitListingMessage">{{submitListingMessage}}</p>
+                        <img class="apartment-img" :src="imageUrl" v-if="imageUrl"/>
                         <v-layout row wrap justify-space-between>
                             <v-flex xs12 md6 class="px-2">
                                 <v-text-field
@@ -80,6 +81,21 @@
                             </v-flex>
 
                             <v-flex xs12 class="px-2">
+                                <v-btn flat class="primary" @click="pickFile">
+                                    <v-icon left>attach_file</v-icon>
+                                    Select Apartment photo
+                                </v-btn>
+                                <span class="ml-3">{{imageName}}</span>
+                                <input
+                                    type="file"
+                                    style="display: none"
+                                    ref="image"
+                                    accept="image/*"
+                                    @change="onFilePicked"
+                                >
+                            </v-flex>
+
+                            <v-flex xs12 class="px-2">
                                 <v-textarea
                                     label="Apartment description"
                                     v-model="description"
@@ -127,27 +143,54 @@ export default {
             phoneRules: [
             ],
             description:'',
+             imageName: 'No image selected yet',
+            imageUrl: '',
+            imageFile: '',
             submitListingMessage: ''
         }
     },
     methods: {
+        pickFile () {
+            this.$refs.image.click ()
+        },
+		
+		onFilePicked (e) {
+			const files = e.target.files
+			if(files[0] !== undefined) {
+				this.imageName = files[0].name
+				if(this.imageName.lastIndexOf('.') <= 0) {
+					return
+				}
+				const fr = new FileReader ()
+				fr.readAsDataURL(files[0])
+				fr.addEventListener('load', () => {
+					this.imageUrl = fr.result
+					this.imageFile = files[0] 
+				})
+			} else {
+				this.imageName = 'No image selected yet'
+				this.imageFile = ''
+				this.imageUrl = ''
+			}
+		},
         submitListing(){
             if(this.$refs.submitListingForm.validate()){
-                console.log("About to submit listing")
+                console.log("About to submit listing");
+                let formData = new FormData();
+                formData.append('apartmentImg', this.imageFile);
+                formData.append('address', this.address);
+                formData.append('apartmentType', this.apartment);
+                formData.append('location', this.location);
+                formData.append('price', this.price);
+                formData.append('status', 1);
+                formData.append('ownerName', this.owner.name);
+                formData.append('ownerEmail', this.owner.email);
+                formData.append('ownerPhone', this.owner.phone);
+                formData.append('description', this.description);
                 axios({
                     method: 'post',
                     url: apiUrl,
-                    data: {
-                        address: this.address,
-                        apartmentType: this.apartment,
-                        location: this.location,
-                        price: this.price,
-                        status: 1,
-                        ownerName: this.owner.name,
-                        ownerEmail: this.owner.email,
-                        ownerPhone: this.owner.phone,
-                        description: this.description
-                    }
+                    data: formData,
                 })
                 .then(res => {
                     this.submitListingMessage = res.data.message;
@@ -166,3 +209,11 @@ export default {
 }
 </script>
 
+<style scoped>
+.apartment-img{
+    display: block;
+    width: 40%;
+    max-height: 250px;
+    margin: 0 auto 10px auto;
+}
+</style>

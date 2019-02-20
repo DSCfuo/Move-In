@@ -21,12 +21,13 @@ exports.getAllListings = async (req, res) => {
 }
 
 exports.createListing = async(req, res, next) => {
+    console.log("Created file", req.file)
     let {address, apartmentType, location, price, status, ownerName, ownerEmail, ownerPhone, description} = req.body;
 
     try {
         const createListingQuery = `INSERT INTO listings (location, price, apartmenttype,
-            description, status, address, owner_name, owner_email, owner_phone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
-        const listingValues = [location, price, apartmentType, description, status, address, ownerName, ownerEmail, ownerPhone];
+            description, status, address, owner_name, owner_email, owner_phone, image_url, image_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+        const listingValues = [location, price, apartmentType, description, status, address, ownerName, ownerEmail, ownerPhone, req.file.url, req.file.public_id];
         const newListing = await db.query(createListingQuery, listingValues);
 
         return res.status(200).json({
