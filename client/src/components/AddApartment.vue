@@ -202,7 +202,7 @@ export default {
         },
         addApartment(){
             if(this.$refs.addApartmentForm.validate()){
-                if(this.imageFile === ''){
+                if(this.imageFile === '' && this.editMode === false){
                     this.addApartmentMessage = "Please select a file"
                     return;
                 }
@@ -256,7 +256,6 @@ export default {
             axios.get(apiUrl+`/${this.$route.params.id}`)
             .then(res => {
                 let apartment = res.data.data;
-                console.log('Yay got single note ', res)
                 this.address = apartment.address;
                 this.apartment = apartment.apartmenttype;
                 this.location = apartment.location;
