@@ -17,6 +17,14 @@ An apartment rental application which allows property owners and proposed tenant
 - :sparkles: Vuetify
 - :elephant: PostgreSQL
 
+## Features
+- Material UI with Vuetify
+- Image upload and storage with cloudinary
+- Sending promotional mails to customers with cron jobs
+- Search for apartments based on location, budget and type.
+- Submit listings of apartments to be leased
+- A fully functional admin dashboard
+
 ## :book: Set up
 Here are the steps you need to follow to set up this project on your local machine.
 1. Clone this repo by running `git clone https://github.com/georgeben/Move-In`
@@ -32,15 +40,18 @@ PGDATABASE (Name of the database), PGHOST (localhost), PGPORT (connection port) 
 10. Run `npm run serve` to start the dev server.
 11. View the vue app on localhost:8080. :tada:
 
-## Features
-- Material UI with Vuetify
-- Sending promotional mails to customers with cron jobs
-- Search for apartments based on location, budget and type.
-- Submit listings of apartments to be leased
-- A fully functional admin dashboard
+## Setting up  cloudinary :cloud:
+1. Create a cloudinary account [here](https://cloudinary.com/)
+2. Add your CLOUD_NAME, API_KEY and API_SECRET to your .env file.
+3. When images have been uploaded, log into your cloudinary dashboard to view them. :tada:
+
+## Setting up mailer
+The application uses gmail to send emails. To set up the mailer,
+1. Add your gmail email and password to your .env file
+2. Tweak the node cron scheduler to schedule intervals at the time you prefer :tada:
 
 ## Contributing
 Contributions are welcome. Feel free to send in your pull requests.
 
 ## Author
-George Benjamin :heart:
+[George Benjamin](https://github.com/georgeben) :heart:
