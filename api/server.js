@@ -26,7 +26,7 @@ if(NODE_ENV === 'production'){
 
 app.use(cors())
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {

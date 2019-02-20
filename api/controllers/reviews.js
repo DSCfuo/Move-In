@@ -13,7 +13,6 @@ exports.getAllReviews = async (req, res, next) => {
 }
 
 exports.addNewReview = async (req, res) => {
-    console.log("Review body", req.body)
     const {rating, review} = req.body;
     try {
         const queryResult = await db.query('INSERT INTO reviews (rating, review) VALUES ($1, $2)', [rating, review]);
