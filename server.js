@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path')
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV;
 const publicPath = path.resolve(__dirname, 'public')
 
@@ -32,12 +32,6 @@ app.use(cors())
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: "Welcome to the MoveIn API"
-    })
-})
 
 app.use('/api/admin', adminRoute);
 app.use('/api/apartments', apartmentsRoute);
