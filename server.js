@@ -7,7 +7,7 @@ const path = require('path')
 
 const port = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV;
-const publicPath = path.resolve(__dirname, 'public')
+const publicPath = path.resolve(__dirname, './api/public')
 
 //Routes
 const adminRoute = require('./api/routes/admin');
