@@ -17,8 +17,6 @@
 <script>
 import Listing from '@/components/Listing.vue';
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/listings';
-
 export default {
     components: {
         Listing,

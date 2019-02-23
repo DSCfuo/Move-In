@@ -56,7 +56,7 @@ export default {
         },
         removeApartment(){
             const token = localStorage.getItem('token');
-            const apiUrl = `http://localhost:3000/api/apartments/${this.house.id}`
+            const apiUrl = `/api/apartments/${this.house.id}`
             axios.delete(apiUrl, {
                 headers: {
                     'authorization': token,

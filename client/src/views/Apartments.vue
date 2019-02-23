@@ -11,7 +11,6 @@
 <script>
 import House from '@/components/House'
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/apartments';
 
 export default {
     data(){

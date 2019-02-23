@@ -49,7 +49,7 @@
 
 <script>
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/apartments/approve_listing'
+const apiUrl = '/api/apartments/approve_listing'
 export default {
     props: ['listing'],
     data(){
@@ -59,7 +59,7 @@ export default {
     },
     methods: {
         removeListingFromDB(){
-            axios.delete(`http://localhost:3000/api/listings/${this.listing.id}`)
+            axios.delete(`/api/listings/${this.listing.id}`)
                 .then((res) => {
                     console.log("Deleted listing", res);
                 })
@@ -68,7 +68,6 @@ export default {
                 })
         },
         approveListing(){
-            console.log("Approving listing");
             const token = localStorage.getItem('token');
             let formData = new FormData();
             formData.append('image_url', this.listing.image_url);

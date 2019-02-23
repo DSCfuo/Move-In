@@ -46,7 +46,7 @@
                                 </v-flex>
 
                             </v-layout>
-                            <v-btn class="primary mx-0" @click="sendMessage">
+                            <v-btn class="primary mx-0" @click="sendMessage" :loading="loading">
                                 <span>Send message</span>
                             </v-btn>
                         </v-form>
@@ -60,7 +60,7 @@
 <script>
 import Header from '@/components/Header'
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/contact';
+const apiUrl = '/api/contact';
 
 export default {
     data(){
@@ -81,22 +81,28 @@ export default {
                 {icon: 'phone', text: '+234 708 543 6753'}
             ],
             contactFormMessage: '',
+            loading: false
         }
     },
     methods: {
         sendMessage(){
             if(this.$refs.contactForm.validate()){
-                console.log("About to send the contact form", this.name, this.email, this.message);
+                this.loading = true;
+                this.contactFormMessage = '';
                 axios.post(apiUrl, {
                     name: this.name,
                     email: this.email,
                     message: this.message,
                 })
                 .then(res => {
+                    this.loading = false;
+                    this.$refs.contactForm.reset()
                     this.contactFormMessage = res.data.message;
                 })
                 .catch(err => {
                     console.log("Couldnt send mail", err);
+                    this.loading = false;
+                    this.$refs.contactForm.reset()
                     this.contactFormMessage = err.response.data.message
                 })
             }

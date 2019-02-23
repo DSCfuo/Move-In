@@ -48,7 +48,7 @@
 
 <script>
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/newsletter';
+const apiUrl = '/api/newsletter';
 export default {
     data(){
         return {

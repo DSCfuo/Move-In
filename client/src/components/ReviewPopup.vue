@@ -31,7 +31,7 @@
                         required
                         ></v-textarea>
                     
-                    <v-btn class="primary mx-0" @click="submitReview">
+                    <v-btn class="primary mx-0" @click="submitReview" :loading="loading">
                         Submit
                     </v-btn>
                 </v-form>
@@ -42,7 +42,7 @@
 
 <script>
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/reviews';
+const apiUrl = 'api/reviews';
 
 export default {
     data(){
@@ -50,21 +50,27 @@ export default {
             rating: 0,
             review: '',
             result: '',
+            loading: false,
         }
     },
     methods: {
         submitReview(){
             if(this.$refs.reviewForm.validate()){
-                console.log(this.rating, this.review);
+                this.loading = true
+                this.result = ''
                 axios.post(apiUrl, {
                     rating: this.rating,
                     review: this.review
                 })
                 .then(res => {
-                    console.log('Yaaay!', res.data.message)
+                    this.loading = false;
+                    this.$refs.reviewForm.reset()
                     this.result = res.data.message
                 })
                 .catch(err => {
+                    this.loading = false;
+                    this.$refs.reviewForm.reset()
+                    this.result = err.message
                     console.log(err)
                 })
             }

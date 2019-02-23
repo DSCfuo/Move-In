@@ -114,7 +114,7 @@
                                     ></v-textarea>
                             </v-flex>
                         </v-layout>
-                        <v-btn class="primary" @click="addApartment">Submit</v-btn>
+                        <v-btn class="primary" @click="addApartment" :loading="loading">Submit</v-btn>
                     </v-card-text>
                 </v-card>
             </v-form>
@@ -124,7 +124,7 @@
 
 <script>
 import axios from 'axios';
-let apiUrl = 'http://localhost:3000/api/apartments';
+let apiUrl = '/api/apartments';
 
 export default {
     data(){
@@ -163,7 +163,8 @@ export default {
             imageName: 'No image selected yet',
             imageUrl: '',
             imageFile: '',
-            addApartmentMessage: ''
+            addApartmentMessage: '',
+            loading: false,
         }
     },
     methods: {
@@ -190,24 +191,13 @@ export default {
 				this.imageUrl = ''
 			}
 		},
-        clearInputFields(){
-            this.address = '';
-            this.apartment = '';
-            this.location = '';
-            this.price = '';
-            this.owner.name = '',
-            this.owner.email = '';
-            this.owner.phone = '';
-            this.description = '';
-        },
         addApartment(){
             if(this.$refs.addApartmentForm.validate()){
                 if(this.imageFile === '' && this.editMode === false){
                     this.addApartmentMessage = "Please select a file"
                     return;
                 }
-                console.log("Submitting",this.address, this.apartment, this.location, this.price, this.owner.name, this.owner.email, this.owner.phone,
-                this.description);
+                this.loading = true;
                 const token = localStorage.getItem('token');
                 let httpMethod = 'post';
                 if(this.editMode){
@@ -237,10 +227,16 @@ export default {
                     
                 })
                 .then(res => {
+                    this.loading = false;
+                    this.$refs.addApartmentForm.reset();
                     this.addApartmentMessage = res.data.message;
-                    // this.clearInputFields()
+                    this.$refs.addApartmentForm.reset();
+                    this.imageName = ''
+                    this.imageFile = ''
+                    this.imageUrl = ''
                 })
                 .catch(err => {
+                    this.loading = false;
                     this.addApartmentMessage = err.response.data.message
                     console.log("An error occured", err)
                 })
