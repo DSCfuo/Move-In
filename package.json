@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node api/server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:create": "cd server && cd models && node createTables",
+    "db:create": "cd api && cd models && node createTables",
     "db:drop": "cd models && node dropTables"
   },
   "author": "George Benjamin",
