@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "API for Movein app",
   "main": "server.js",
+  "engines": {
+    "node":"10.15.0"
+  },
   "scripts": {
-    "start": "node server",
+    "start": "node api/server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:create": "cd models && node createTables",
+    "db:create": "cd server && cd models && node createTables",
     "db:drop": "cd models && node dropTables"
   },
   "author": "George Benjamin",

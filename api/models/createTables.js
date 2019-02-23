@@ -1,8 +1,6 @@
+require('dotenv').config()
 const {Client} = require('pg')
-const dotenv = require('dotenv')
 const {adminTable, houseTable, listingsTable, ownerTable, subscribersTable, reviewsTable} = require('./tables')
-
-dotenv.config();
 
 const client = new Client();
 
