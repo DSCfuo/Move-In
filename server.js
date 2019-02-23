@@ -10,14 +10,14 @@ const NODE_ENV = process.env.NODE_ENV;
 const publicPath = path.resolve(__dirname, 'public')
 
 //Routes
-const adminRoute = require('./routes/admin');
-const apartmentsRoute = require('./routes/apartments')
-const newsletterRoute = require('./routes/newsletter');
-const reviewsRoute = require('./routes/reviews');
-const contactUsRoute = require('./routes/contact');
-const listingRoute = require('./routes/listings');
+const adminRoute = require('./api/routes/admin');
+const apartmentsRoute = require('./api/routes/apartments')
+const newsletterRoute = require('./api/routes/newsletter');
+const reviewsRoute = require('./api/routes/reviews');
+const contactUsRoute = require('./api/routes/contact');
+const listingRoute = require('./api/routes/listings');
 
-require('./mailer/newsletter_cronjob');
+require('./api/mailer/newsletter_cronjob');
 
 const app = express();
 
