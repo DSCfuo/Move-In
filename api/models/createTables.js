@@ -3,8 +3,7 @@ const {Client} = require('pg')
 const {adminTable, houseTable, listingsTable, ownerTable, subscribersTable, reviewsTable} = require('./tables')
 
 const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
+    connectionString: process.env.PGDATABASE,
 });
 
 const createTables = async () => {
