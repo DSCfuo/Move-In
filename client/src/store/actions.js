@@ -1,5 +1,5 @@
 import axios from 'axios'
-const apiUrl = 'http://localhost:3000/api/apartments/search';
+const apiUrl = '/api/apartments/search';
 
 const actions = {
     searchApartment(context, {location, budget, apartmentType}){
@@ -21,9 +21,9 @@ const actions = {
     },
 
     getAllApartments(context){
-      axios.get('http://localhost:3000/api/apartments')
+      axios.get('/api/apartments')
       .then(res => {
-        console.log("All apartments", res.data)
+        console.log("All apartments", res)
         context.commit('updateApartments', res.data.data)
       })
       .catch(err => {
@@ -31,7 +31,7 @@ const actions = {
       })
     },
     initialSearch(context){
-      axios.get('http://localhost:3000/api/apartments')
+      axios.get('/api/apartments')
       .then(res => {
         console.log("All apartments", res.data)
         context.commit('updateSearchResults', res.data.data)
@@ -41,13 +41,13 @@ const actions = {
       })
     },
     getListings(context){
-      axios.get('http://localhost:3000/api/listings')
+      axios.get('/api/listings')
         .then(res => {
             context.commit('setListings', res.data.data)
             this.listings = res.data.data
         })
         .catch(err => {
-            console.log("Failed to fetch listings", err)
+            console.log("Failed to fetch listings", err.response)
         })
     }
   }

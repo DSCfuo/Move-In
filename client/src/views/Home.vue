@@ -3,7 +3,7 @@
     <div class="showcase pt-5">
       <h2 class="display-2 mx-auto white--text">Find the perfect apartment</h2>
       <h5 class="title mx-auto white--text">Search for available houses, shops and offices in the location you want, at the price you want.
-        Your pergect apartment is just a click away
+        Your perfect apartment is just a click away
       </h5>
       <SearchBox :location="location" :budget="budget" :apartment="apartment" page="search" />
       <ReviewPopup />

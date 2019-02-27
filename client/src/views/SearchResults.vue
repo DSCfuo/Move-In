@@ -14,8 +14,6 @@
 <script>
 import SearchBox from '@/components/SearchBox.vue';
 import House from '@/components/House.vue';
-const apiUrl = 'http://localhost:3000/api/apartments/search';
-import axios from 'axios';
 
 export default {
   props: ['page', 'modify'],

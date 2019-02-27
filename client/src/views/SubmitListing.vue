@@ -103,7 +103,7 @@
                                     ></v-textarea>
                             </v-flex>
                         </v-layout>
-                        <v-btn class="primary" @click="submitListing">Submit Listing</v-btn>
+                        <v-btn class="primary" @click="submitListing" :loading="loading">Submit Listing</v-btn>
                     </v-card-text>
                 </v-card>
             </v-form>
@@ -114,7 +114,7 @@
 <script>
 import Header from '@/components/Header';
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/listings'
+const apiUrl = 'api/listings'
 export default {
     data(){
         return {
@@ -146,12 +146,13 @@ export default {
              imageName: 'No image selected yet',
             imageUrl: '',
             imageFile: '',
-            submitListingMessage: ''
+            submitListingMessage: '',
+            loading: false,
         }
     },
     methods: {
         pickFile () {
-            this.$refs.image.click ()
+            this.$refs.image.click()
         },
 		
 		onFilePicked (e) {
@@ -175,7 +176,7 @@ export default {
 		},
         submitListing(){
             if(this.$refs.submitListingForm.validate()){
-                console.log("About to submit listing");
+                this.loading = true;
                 let formData = new FormData();
                 formData.append('apartmentImg', this.imageFile);
                 formData.append('address', this.address);
@@ -193,11 +194,13 @@ export default {
                     data: formData,
                 })
                 .then(res => {
+                    this.loading = false;
                     this.submitListingMessage = res.data.message;
-                    // this.clearInputFields()
+                    this.$refs.submitListingForm.reset();
                 })
                 .catch(err => {
-                    this.submitListingMessage = res.data.message
+                    this.loading = false;
+                    this.submitListingMessage = err.response.data.message;
                     console.log("An error occured", err)
                 })
             }

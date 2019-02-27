@@ -1,7 +1,9 @@
 const {Client} = require('pg');
 require('dotenv').config();
 
-const client = new Client();
+const client = new Client({
+    connectionString: process.env.PGDATABASE,
+});
 
 const dropTables = async () => {
     await client.connect();

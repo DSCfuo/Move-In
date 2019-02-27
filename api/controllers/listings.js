@@ -21,7 +21,6 @@ exports.getAllListings = async (req, res) => {
 }
 
 exports.createListing = async(req, res, next) => {
-    console.log("Created file", req.file)
     let {address, apartmentType, location, price, status, ownerName, ownerEmail, ownerPhone, description} = req.body;
 
     try {

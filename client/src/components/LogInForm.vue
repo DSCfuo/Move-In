@@ -26,7 +26,7 @@
           </v-flex>
 
         </v-layout>
-        <v-btn class="primary mx-0" @click="login">
+        <v-btn class="primary mx-0" @click="login" :loading="loading">
           <span>Log In</span>
         </v-btn>
       </v-card>
@@ -36,7 +36,7 @@
 
 <script>
 import axios from 'axios';
-const apiUrl = 'http://localhost:3000/api/admin/login';
+const apiUrl = '/api/admin/login';
 
   export default {
     data () {
@@ -52,21 +52,25 @@ const apiUrl = 'http://localhost:3000/api/admin/login';
           required: value => !!value || 'Please enter your password',
         },
         loginError: '',
+        loading: false
       }
     },
     methods: {
       login(){
         if(this.$refs.loginForm.validate()){
+          this.loading = true;
           axios.post(apiUrl, {
             email: this.email,
             password: this.password,
           })
           .then(res => {
+            this.loading = false;
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('admin', JSON.stringify(res.data.admin));
             this.$router.push('/admin/dashboard')
           })
           .catch(err => {
+            this.loading = false;
             console.log("An error occured", err)
             if(err.message === 'Network Error'){
               this.loginError = "Failed to connect to server";

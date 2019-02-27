@@ -3,7 +3,9 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const pool = new Pool();
+const pool = new Pool({
+  connectionString: process.env.PGDATABASE,
+});
 
 module.exports = {
   query(text, params){
